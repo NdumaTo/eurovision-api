@@ -1,0 +1,14 @@
+{
+  "name": "eurovision-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:NdumaTo/eurovision-api.git",
+  "author": "Tola Ndumari <donlino50@hotmail.com>",
+  "license": "MIT",
+  "workspaces": [
+    "api",
+    "site",
+    "common"
+  ],
+  "private": "true"
+}

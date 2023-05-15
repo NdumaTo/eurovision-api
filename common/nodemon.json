@@ -1,0 +1,7 @@
+{
+  "restartable": "rs:pol",
+  "watch": ["src"],
+  "execMap": {
+      "ts": "ts-node"
+  }
+}
