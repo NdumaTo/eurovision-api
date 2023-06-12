@@ -52,19 +52,17 @@ export interface ParsedVote {
   jury_points: string
 }
 
-interface IContest {
+export interface IContest {
   id: string
   year: number
-  hostCountry: string
+  // hostCountry: string
   // hostCity: string
   // venue: string
   // date: string
   // logoUrl: string
-  semiFinals: number
-  final: boolean
-  countries: string[]
-  performers: string[]
-  songs: string[]
+  semiFinals: 0 | 1 | 2
+  winnerOnly: boolean
+  contestants: string[]
 }
 
 export interface ICountry {

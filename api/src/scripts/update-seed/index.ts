@@ -3,7 +3,8 @@ import { join } from 'path'
 import { readFileSync, writeFileSync } from 'fs'
 import { ContestantsWithContestants } from '../seed-db/get-contestants'
 import { groupBy } from 'lodash'
-import { ICountry } from '../seed-db/types'
+import { ICountry, IContest } from '../seed-db/types'
+import { v4 } from 'uuid'
 
 const pinoOptions: pino.LoggerOptions = {
   name: 'update-seed',
@@ -215,9 +216,35 @@ async function updateSeed() {
 
   parsedSeedData.contestants = contestantsWithSongIDs
 
+  const contestantsGroupedByYear = groupBy(parsedSeedData.contestants, 'year')
+
+  const determineNumberOfSemiFinals = (year: string) => {
+    if (year < '2004') {
+      return 0
+    }
+
+    if (year < '2008') {
+      return 1
+    }
+
+    return 2
+  }
+
+  const contests: IContest[] = Object.entries(contestantsGroupedByYear).map(
+    ([year, contestants]) => {
+      return {
+        id: v4(),
+        year: Number(year),
+        semiFinals: determineNumberOfSemiFinals(year),
+        winnerOnly: year === '1956',
+        contestants: contestants.map((contestant) => contestant.id)
+      }
+    }
+  )
+
   writeFileSync(
     join(__dirname, '..', '../', 'assets', '/seed-data-with-relations.json'),
-    JSON.stringify(parsedSeedData, null, 2)
+    JSON.stringify({ ...parsedSeedData, contests }, null, 2)
   )
 
   logger.info('Seed data updated')
