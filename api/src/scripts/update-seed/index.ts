@@ -60,7 +60,12 @@ async function updateSeed() {
       ([name, [{ id }]]) => ({ id, name })
     ),
     ...Object.entries(groupedCountriesWhereMoreThanOneID).map(
-      ([name, [{ id }]]) => ({ id, name })
+      ([name, countries]) => ({
+        id: countries.sort(
+          ({ id: idA }, { id: idB }) => idA.length - idB.length
+        )[0].id,
+        name
+      })
     ),
     { id: 'AD', name: 'Andorra' }
   ]
