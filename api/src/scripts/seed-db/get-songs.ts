@@ -1,7 +1,7 @@
 import { Logger } from 'pino'
 import { v4 } from 'uuid'
-import { IPerformer, ISong, ParsedContestant } from './types'
 import { ContestantsWithPerformers } from './get-performers'
+import { ISong } from './types'
 
 export interface ContestantsWithSongs extends ContestantsWithPerformers {
   songs: ISong[]

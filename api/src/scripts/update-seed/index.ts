@@ -242,7 +242,8 @@ async function updateSeed() {
         year: Number(year),
         semiFinals: determineNumberOfSemiFinals(year),
         winnerOnly: year === '1956',
-        contestants: contestants.map((contestant) => contestant.id)
+        contestants: contestants.map((contestant) => contestant.id),
+        votes: []
       }
     }
   )

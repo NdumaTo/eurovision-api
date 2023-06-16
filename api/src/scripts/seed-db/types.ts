@@ -63,6 +63,7 @@ export interface IContest {
   semiFinals: 0 | 1 | 2
   winnerOnly: boolean
   contestants: string[]
+  votes: string[]
 }
 
 export interface ICountry {

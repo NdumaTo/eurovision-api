@@ -1,8 +1,7 @@
+import { parse } from 'csv-parse'
+import { readFileSync, writeFileSync } from 'fs'
 import { join } from 'path'
 import pino from 'pino'
-import { readFileSync, writeFileSync } from 'fs'
-import { parse } from 'csv-parse'
-import { groupBy } from 'lodash'
 import { v4 } from 'uuid'
 
 export interface IVote {

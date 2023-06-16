@@ -1,7 +1,7 @@
 import { Logger } from 'pino'
-import { ContestantsWithCountries } from './get-countries'
-import { IContestant, ICountry } from './types'
 import { v4 } from 'uuid'
+import { ContestantsWithCountries } from './get-countries'
+import { IContestant } from './types'
 
 export interface ContestantsWithContestants extends ContestantsWithCountries {
   contestants: IContestant[]
