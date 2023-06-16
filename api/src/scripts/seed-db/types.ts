@@ -1,3 +1,5 @@
+import { IVote } from '../votes'
+
 export interface ParsedContestant {
   year: string
   to_country_id: string // country id of contestant icontestant.country
@@ -87,4 +89,13 @@ export interface ISong {
   country: string
   year: number
   youtubeUrl: string
+}
+
+export interface DatabaseData {
+  countries: ICountry[]
+  performers: IPerformer[]
+  songs: ISong[]
+  contests: IContest[]
+  contestants: IContestant[]
+  votes: IVote[]
 }
