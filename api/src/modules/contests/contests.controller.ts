@@ -8,7 +8,8 @@ import {
   ValidationPipe
 } from '@nestjs/common'
 import { ContestsService } from './contests.service'
-import { ContestsQueryParamsDto } from './contests.dto'
+import { ContestResultDto, ContestsQueryParamsDto, ContestsResponseDto } from './contests.dto'
+import { ApiParam, ApiResponse } from '@nestjs/swagger'
 
 @Controller('contests')
 @UsePipes(
@@ -21,6 +22,15 @@ export class ContestsController {
   constructor(private readonly contestService: ContestsService) {}
 
   @Get()
+  @ApiResponse({
+    status: 200,
+    description: 'The contests that have been successfully retrieved.',
+    type: ContestsResponseDto
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'The contests could not be found.'
+  })
   getContests(
     @Query(new DefaultValuePipe({ skip: 0, limit: 100 }))
     params: ContestsQueryParamsDto
@@ -31,6 +41,20 @@ export class ContestsController {
   }
 
   @Get(':id')
+  @ApiParam({
+    name: 'id',
+    description: 'The ID of the contest to retrieve.',
+    format: 'uuid'
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'The contest that have been successfully retrieved.',
+    type: ContestResultDto
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'The contest could not be found.'
+  })
   getContestByID(@Param('id') id: string) {
     return this.contestService.getContestByID(id)
   }

@@ -7,7 +7,12 @@ import {
   UsePipes,
   ValidationPipe
 } from '@nestjs/common'
-import { ContestantsQueryParamsDto } from './contestants.dto'
+import { ApiParam, ApiResponse } from '@nestjs/swagger'
+import {
+  ContestantResultDto,
+  ContestantsQueryParamsDto,
+  ContestantsResponseDto
+} from './contestants.dto'
 import { ContestantsService } from './contestants.service'
 
 @Controller('contestants')
@@ -21,6 +26,15 @@ export class ContestantsController {
   constructor(private readonly contestantService: ContestantsService) {}
 
   @Get()
+  @ApiResponse({
+    status: 200,
+    description: 'The contestants that have been successfully retrieved.',
+    type: ContestantsResponseDto
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'The contestants could not be found.'
+  })
   getContestants(
     @Query(new DefaultValuePipe({ skip: 0, limit: 100 }))
     params: ContestantsQueryParamsDto
@@ -31,6 +45,20 @@ export class ContestantsController {
   }
 
   @Get(':id')
+  @ApiParam({
+    name: 'id',
+    description: 'The ID of the contestant to retrieve.',
+    format: 'uuid'
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'The contestant that have been successfully retrieved.',
+    type: ContestantResultDto
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'The contestant could not be found.'
+  })
   getContestantByID(@Param('id') id: string) {
     return this.contestantService.getContestantByID(id)
   }

@@ -7,8 +7,13 @@ import {
   UsePipes,
   ValidationPipe
 } from '@nestjs/common'
+import { ApiParam, ApiResponse } from '@nestjs/swagger'
+import {
+  CountriesQueryParamsDto,
+  CountriesResponseDto,
+  CountryResultDto
+} from './countries.dto'
 import { CountriesService } from './countries.service'
-import { CountriesQueryParamsDto } from './countries.dto'
 
 @Controller('countries')
 @UsePipes(
@@ -21,6 +26,15 @@ export class CountriesController {
   constructor(private readonly countryService: CountriesService) {}
 
   @Get()
+  @ApiResponse({
+    status: 200,
+    description: 'The countries that have been successfully retrieved.',
+    type: CountriesResponseDto
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'The countries could not be found.'
+  })
   getCountries(
     @Query(new DefaultValuePipe({ skip: 0, limit: 100 }))
     params: CountriesQueryParamsDto
@@ -31,6 +45,19 @@ export class CountriesController {
   }
 
   @Get(':id')
+  @ApiParam({
+    name: 'id',
+    description: 'The ID of the country to retrieve.'
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'The country that have been successfully retrieved.',
+    type: CountryResultDto
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'The country could not be found.'
+  })
   getCountryByID(@Param('id') id: string) {
     return this.countryService.getCountryByID(id)
   }

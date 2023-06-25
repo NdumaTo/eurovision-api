@@ -3,12 +3,18 @@ import {
   DefaultValuePipe,
   Get,
   Param,
+  ParseUUIDPipe,
   Query,
   UsePipes,
   ValidationPipe
 } from '@nestjs/common'
+import { ApiParam, ApiResponse } from '@nestjs/swagger'
+import {
+  SongResultDto,
+  SongsQueryParamsDto,
+  SongsResponseDto
+} from './songs.dto'
 import { SongsService } from './songs.service'
-import { SongsQueryParamsDto } from './songs.dto'
 
 @Controller('songs')
 @UsePipes(
@@ -21,6 +27,15 @@ export class SongsController {
   constructor(private readonly songService: SongsService) {}
 
   @Get()
+  @ApiResponse({
+    status: 200,
+    description: 'The songs that have been successfully retrieved.',
+    type: SongsResponseDto
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'The songs could not be found.'
+  })
   getSongs(
     @Query(new DefaultValuePipe({ skip: 0, limit: 100 }))
     params: SongsQueryParamsDto
@@ -30,7 +45,21 @@ export class SongsController {
   }
 
   @Get(':id')
-  getSongByID(@Param('id') id: string) {
+  @ApiParam({
+    name: 'id',
+    description: 'The ID of the song to retrieve.',
+    format: 'uuid'
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'The song that have been successfully retrieved.',
+    type: SongResultDto
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'The song could not be found.'
+  })
+  getSongByID(@Param('id', ParseUUIDPipe) id: string) {
     return this.songService.getSongByID(id)
   }
 }

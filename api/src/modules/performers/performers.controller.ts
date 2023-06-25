@@ -3,12 +3,18 @@ import {
   DefaultValuePipe,
   Get,
   Param,
+  ParseUUIDPipe,
   Query,
   UsePipes,
   ValidationPipe
 } from '@nestjs/common'
+import { ApiParam, ApiResponse } from '@nestjs/swagger'
+import {
+  PerformerResultDto,
+  PerformersQueryParamsDto,
+  PerformersResponseDto
+} from './performers.dto'
 import { PerformersService } from './performers.service'
-import { PerformersQueryParamsDto } from './performers.dto'
 
 @Controller('performers')
 @UsePipes(
@@ -21,6 +27,15 @@ export class PerformersController {
   constructor(private readonly performerService: PerformersService) {}
 
   @Get()
+  @ApiResponse({
+    status: 200,
+    description: 'The performers that have been successfully retrieved.',
+    type: PerformersResponseDto
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'The performers could not be found.'
+  })
   getPerformers(
     @Query(new DefaultValuePipe({ skip: 0, limit: 100 }))
     params: PerformersQueryParamsDto
@@ -31,7 +46,21 @@ export class PerformersController {
   }
 
   @Get(':id')
-  getPerformerByID(@Param('id') id: string) {
+  @ApiParam({
+    name: 'id',
+    description: 'The ID of the performer to retrieve.',
+    format: 'uuid'
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'The performer that have been successfully retrieved.',
+    type: PerformerResultDto
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'The performer could not be found.'
+  })
+  getPerformerByID(@Param('id', ParseUUIDPipe) id: string) {
     return this.performerService.getPerformerByID(id)
   }
 }

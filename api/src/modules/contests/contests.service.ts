@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common'
+import { Injectable, Logger, NotFoundException } from '@nestjs/common'
 import { Database } from 'src/database/database'
 
 @Injectable()
@@ -7,11 +7,27 @@ export class ContestsService {
   constructor(private readonly database: Database) {}
 
   getContests(skip = 0, limit = 100) {
-    return this.database.contests.slice(skip, skip + limit)
+    this.logger.log({ skip, limit }, 'Getting contests')
+
+    const contests = this.database.contests.slice(skip, skip + limit)
+
+    if (!contests.length) {
+      this.logger.warn({ skip, limit }, 'No contests found')
+      throw new NotFoundException('No contests found')
+    }
+
+    return { total: this.database.contests.length, data: contests }
   }
 
   getContestByID(id: string) {
     this.logger.log({ id }, 'Getting contest by ID')
-    return this.database.contests.find((contest) => contest.id === id)
+    const contest = this.database.contests.find((contest) => contest.id === id)
+
+    if (!contest) {
+      this.logger.warn({ id }, 'Contest not found')
+      throw new NotFoundException(`Contest with ID ${id} }not found`)
+    }
+
+    return contest
   }
 }

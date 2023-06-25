@@ -3,7 +3,7 @@ import { IsInt, IsOptional, Max, Min } from 'class-validator'
 
 export class SkipAndLimitDto {
   @ApiProperty({
-    description: 'The number of votes to skip',
+    description: 'The number of items to skip',
     default: 0,
     minimum: 0
   })
@@ -13,7 +13,7 @@ export class SkipAndLimitDto {
   public skip: number
 
   @ApiProperty({
-    description: 'The number of votes to skip',
+    description: 'The maxiumum number of items to return',
     default: 100,
     minimum: 1,
     maximum: 100
