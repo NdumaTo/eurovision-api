@@ -4,7 +4,7 @@ const postDeployCommands = [
 ].join(' && ')
 
 const scriptPath = './node_modules/.bin/yarn'
-const workingDirectory = '/home/ubuntu/apps/eurovision-api/current/api'
+const workingDirectory = '/home/ubuntu/apps/eurovision-api/current'
 
 module.exports = {
   apps: [

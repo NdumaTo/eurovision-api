@@ -10,5 +10,11 @@
     "site",
     "common"
   ],
-  "private": "true"
+  "private": "true",
+  "scrip": {
+    "start": "yarn workspace api start"
+  },
+  "dependencies": {
+    "pm2": "^5.3.0"
+  }
 }
