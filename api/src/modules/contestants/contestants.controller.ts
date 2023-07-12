@@ -7,7 +7,7 @@ import {
   UsePipes,
   ValidationPipe
 } from '@nestjs/common'
-import { ApiParam, ApiResponse } from '@nestjs/swagger'
+import { ApiOperation, ApiParam, ApiProperty, ApiResponse } from '@nestjs/swagger'
 import {
   ContestantResultDto,
   ContestantsQueryParamsDto,
@@ -35,6 +35,9 @@ export class ContestantsController {
     status: 404,
     description: 'The contestants could not be found.'
   })
+  @ApiOperation({
+    operationId: 'Get Contestants'
+  })
   getContestants(
     @Query(new DefaultValuePipe({ skip: 0, limit: 100 }))
     params: ContestantsQueryParamsDto
@@ -49,6 +52,9 @@ export class ContestantsController {
     name: 'id',
     description: 'The ID of the contestant to retrieve.',
     format: 'uuid'
+  })
+  @ApiOperation({
+    operationId: 'Get Contestant By ID'
   })
   @ApiResponse({
     status: 200,

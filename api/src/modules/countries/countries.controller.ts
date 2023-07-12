@@ -7,7 +7,7 @@ import {
   UsePipes,
   ValidationPipe
 } from '@nestjs/common'
-import { ApiParam, ApiResponse } from '@nestjs/swagger'
+import { ApiOperation, ApiParam, ApiResponse } from '@nestjs/swagger'
 import {
   CountriesQueryParamsDto,
   CountriesResponseDto,
@@ -35,6 +35,9 @@ export class CountriesController {
     status: 404,
     description: 'The countries could not be found.'
   })
+  @ApiOperation({
+    operationId: 'Get Countries'
+  })
   getCountries(
     @Query(new DefaultValuePipe({ skip: 0, limit: 100 }))
     params: CountriesQueryParamsDto
@@ -57,6 +60,9 @@ export class CountriesController {
   @ApiResponse({
     status: 404,
     description: 'The country could not be found.'
+  })
+  @ApiOperation({
+    operationId: 'Get Country By ID'
   })
   getCountryByID(@Param('id') id: string) {
     return this.countryService.getCountryByID(id)

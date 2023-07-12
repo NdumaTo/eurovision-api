@@ -3,6 +3,7 @@ import { readFileSync, writeFileSync } from 'fs'
 import { join } from 'path'
 import pino from 'pino'
 import { v4 } from 'uuid'
+import { ContestRound } from './types'
 
 export interface IVote {
   id: string
@@ -12,13 +13,6 @@ export interface IVote {
   toCountry: string
   juryPoints: number
   telePoints: number
-}
-
-export enum ContestRound {
-  FINAL = 'final',
-  SEMI_Final = 'semi-final',
-  SEMI_FINAL_1 = 'semi-final-1',
-  SEMI_FINAL_2 = 'semi-final-2'
 }
 
 const pinoOptions: pino.LoggerOptions = {
@@ -117,7 +111,7 @@ async function parseVotes() {
     return returnVote
   })
 
-  logger.info(`Finished processing votes, ${votesWithCountries.length} votes}`)
+  logger.info(`Finished processing votes, ${votesWithCountries.length} votes`)
   logger.info('Writing votes to file')
 
   writeFileSync(

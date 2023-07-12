@@ -8,7 +8,7 @@ import {
   UsePipes,
   ValidationPipe
 } from '@nestjs/common'
-import { ApiParam, ApiResponse } from '@nestjs/swagger'
+import { ApiOperation, ApiParam, ApiResponse } from '@nestjs/swagger'
 import {
   SongResultDto,
   SongsQueryParamsDto,
@@ -36,6 +36,9 @@ export class SongsController {
     status: 404,
     description: 'The songs could not be found.'
   })
+  @ApiOperation({
+    operationId: 'Get Songs'
+  })
   getSongs(
     @Query(new DefaultValuePipe({ skip: 0, limit: 100 }))
     params: SongsQueryParamsDto
@@ -58,6 +61,9 @@ export class SongsController {
   @ApiResponse({
     status: 404,
     description: 'The song could not be found.'
+  })
+  @ApiOperation({
+    operationId: 'Get Song By ID'
   })
   getSongByID(@Param('id', ParseUUIDPipe) id: string) {
     return this.songService.getSongByID(id)

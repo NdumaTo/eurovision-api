@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common'
 import { ContestsService } from './contests.service'
 import { ContestResultDto, ContestsQueryParamsDto, ContestsResponseDto } from './contests.dto'
-import { ApiParam, ApiResponse } from '@nestjs/swagger'
+import { ApiOperation, ApiParam, ApiResponse } from '@nestjs/swagger'
 
 @Controller('contests')
 @UsePipes(
@@ -30,6 +30,9 @@ export class ContestsController {
   @ApiResponse({
     status: 404,
     description: 'The contests could not be found.'
+  })
+  @ApiOperation({
+    operationId: 'Get Contests'
   })
   getContests(
     @Query(new DefaultValuePipe({ skip: 0, limit: 100 }))
@@ -54,6 +57,9 @@ export class ContestsController {
   @ApiResponse({
     status: 404,
     description: 'The contest could not be found.'
+  })
+  @ApiOperation({
+    operationId: 'Get Contest By ID'
   })
   getContestByID(@Param('id') id: string) {
     return this.contestService.getContestByID(id)

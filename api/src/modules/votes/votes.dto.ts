@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { ContestRound } from 'src/scripts/votes'
+import { ContestRound } from 'src/scripts/votes/types'
 import { SkipAndLimitDto } from 'src/types/skip-and-limit.dto'
 
 export class VotesQueryParamsDto extends SkipAndLimitDto {}

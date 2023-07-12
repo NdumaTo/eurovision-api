@@ -8,7 +8,7 @@ import {
   UsePipes,
   ValidationPipe
 } from '@nestjs/common'
-import { ApiParam, ApiResponse } from '@nestjs/swagger'
+import { ApiOperation, ApiParam, ApiResponse } from '@nestjs/swagger'
 import {
   VoteResultDto,
   VotesQueryParamsDto,
@@ -36,6 +36,9 @@ export class VotesController {
     status: 404,
     description: 'The votes could not be found.'
   })
+  @ApiOperation({
+    operationId: 'Get Votes'
+  })
   getVotes(
     @Query(new DefaultValuePipe({ skip: 0, limit: 100 }))
     params: VotesQueryParamsDto
@@ -61,6 +64,9 @@ export class VotesController {
   @ApiResponse({
     status: 404,
     description: 'The vote could not be found.'
+  })
+  @ApiOperation({
+    operationId: 'Get Vote By ID'
   })
   getVoteByID(@Param('id', ParseUUIDPipe) id: string): VoteResultDto {
     return this.votesService.getVoteByID(id)

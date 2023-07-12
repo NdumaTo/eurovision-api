@@ -8,7 +8,7 @@ import {
   UsePipes,
   ValidationPipe
 } from '@nestjs/common'
-import { ApiParam, ApiResponse } from '@nestjs/swagger'
+import { ApiOperation, ApiParam, ApiResponse } from '@nestjs/swagger'
 import {
   PerformerResultDto,
   PerformersQueryParamsDto,
@@ -36,6 +36,9 @@ export class PerformersController {
     status: 404,
     description: 'The performers could not be found.'
   })
+  @ApiOperation({
+    operationId: 'Get Performers'
+  })
   getPerformers(
     @Query(new DefaultValuePipe({ skip: 0, limit: 100 }))
     params: PerformersQueryParamsDto
@@ -59,6 +62,9 @@ export class PerformersController {
   @ApiResponse({
     status: 404,
     description: 'The performer could not be found.'
+  })
+  @ApiOperation({
+    operationId: 'Get Performer By ID'
   })
   getPerformerByID(@Param('id', ParseUUIDPipe) id: string) {
     return this.performerService.getPerformerByID(id)
