@@ -12,7 +12,7 @@
   ],
   "private": "true",
   "scrip": {
-    "start": "yarn workspace api start"
+    "start": "yarn workspace api start:prod"
   },
   "dependencies": {
     "pm2": "^5.3.0"

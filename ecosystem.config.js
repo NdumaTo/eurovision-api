@@ -1,6 +1,6 @@
 const postDeployCommands = [
   '~/.npm-global/bin/yarn install --production --ignore-engines',
-  'NODE_ENV=production ~/.npm-global/bin/yarn build'
+  'NODE_ENV=production ~/.npm-global/bin/yarn workspace api build'
 ].join(' && ')
 
 const scriptPath = './node_modules/.bin/yarn'
@@ -11,12 +11,12 @@ module.exports = {
     {
       name: 'Eurovision API',
       script: scriptPath,
-      args: 'start:service:api',
+      args: 'start',
       cwd: workingDirectory,
       autorestart: true,
       env_production: {
         NODE_ENV: 'production',
-        CONFIG_FILE_PATH: '/home/ubuntu/app-configs/eurovision-api.json'
+        CONFIG_FILE_PATH: '/home/ubuntu/app-configs/eurovision-api.env'
       }
     }
   ],
