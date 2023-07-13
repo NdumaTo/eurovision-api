@@ -11,7 +11,8 @@
     "common"
   ],
   "private": "true",
-  "scrip": {
+  "scripts": {
+    "build": "yarn workspace api build",
     "start": "yarn workspace api start:prod"
   },
   "dependencies": {
