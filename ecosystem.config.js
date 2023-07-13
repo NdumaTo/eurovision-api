@@ -27,7 +27,7 @@ module.exports = {
       host: 'cult.nfgreading.com',
       ref: 'origin/master',
       repo: 'git@github.com:NdumaTo/eurovision-api.git',
-      path: '/home/ubuntu/apps/eurovision-api',
+      path: '/home/ubuntu/apps/eurovision-api/source/eurovision-api',
       'post-deploy': postDeployCommands,
       ssh_options: ['Port=1338', 'ForwardAgent=yes']
     }
