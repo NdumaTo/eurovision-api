@@ -1,3 +1,4 @@
+// @ts-nocheck
 import pino from 'pino'
 import { join } from 'path'
 import { readFileSync, writeFileSync } from 'fs'
